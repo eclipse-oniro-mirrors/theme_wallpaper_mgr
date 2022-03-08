@@ -1,0 +1,67 @@
+# Copyright (c) 2020-2022 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#     http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/test.gni")
+
+## UnitTest wallpaper_test {{{
+
+ohos_unittest("wallpaper_test") {
+  module_out_path = "wallpaper_native/wallpaper_test"
+  sources = [
+             "unittest/wallpaper_test.cpp"
+            #"unittest/wallpaperpermissontest.cpp", 
+            #"unittest/image_source_picture_test.cpp", 
+  ]
+
+  include_dirs = [
+    "//third_party/json/include",
+    "//base/miscservices/wallpaper/frameworks/innerkitsimpl/wallpaper_manager/include",
+    "//base/miscservices/wallpaper/utils/include",
+    "//base/miscservices/wallpaper/frameworks/innerkitsimpl/wallpaper_manager/include",
+    "//foundation/graphic/standard/interfaces/innerkits/wm",
+
+    #"//foundation/multimedia/image_standard/interfaces/innerkits/include",
+  ]
+  deps = [
+    "//utils/native/base:utils",
+    "//foundation/aafwk/standard/frameworks/kits/ability/native:abilitykit_native",
+    "//foundation/multimedia/image_standard/interfaces/innerkits:image_native",
+    "//base/hiviewdfx/hiview/adapter/utility:hiview_adapter_utility",
+    "//foundation/windowmanager/wm:libwm",
+    "//foundation/windowmanager/utils:libwmutil",
+    "//foundation/multimedia/image_standard:image_framework",
+    "//foundation/multimedia/image_standard/interfaces/innerkits:image",
+    "//foundation/multimedia/image_standard/interfaces/innerkits:image_native",
+    "//base/miscservices/wallpaper/frameworks/innerkitsimpl/wallpaper_manager:wallpapermanager",
+  ]
+  external_deps = [
+
+    "ability_runtime:ability_manager",
+    "ability_base:want",
+    "permission_standard:libpermissionsdk_standard",
+    "safwk:system_ability_fwk",
+    "samgr_standard:samgr_proxy",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "ces_standard:cesfwk_innerkits",
+  ]
+}
+
+## UnitTest wallpaper_test }}}
+
+group("unittest") {
+  testonly = true
+  deps = [ ":wallpaper_test" ]
+}
+
+
+
+
