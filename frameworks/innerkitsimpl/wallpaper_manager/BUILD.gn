@@ -1,0 +1,72 @@
+# Copyright (C) 2022 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+import("//base/miscservices/wallpaper/wallpaper.gni")
+
+config("wallpaper_manager_config") {
+  visibility = [ ":*" ]
+  include_dirs = [
+    "include",
+    "//base/miscservices/wallpaper/services/include",
+    "//base/miscservices/wallpaper/utils/include",
+    "//base/security/permission/interfaces/innerkits/permission_standard/permissionsdk/main/cpp/include/permission",
+  ]
+  cflags_cc = [ "-fexceptions" ]
+}
+
+ohos_shared_library("wallpapermanager") {
+  sources = [
+    "src/wallpaper_manager.cpp",
+    "src/wallpaper_service_proxy.cpp",
+    "src/wallpaper_service_cb_stub.cpp",
+    "src/wallpaper_manager_kits.cpp",
+    "src/iwallpaper_color_change_listener.cpp",
+    "src/wallpaper_color_change_listener_client.cpp",
+    #"src/wallpaper_callback_stub.cpp",
+  ]
+  public_configs = [
+    ":wallpaper_manager_config",
+  ]
+   include_dirs = [
+  ]
+  deps = [
+    "//base/miscservices/wallpaper/services:wallpaper_service",
+    "//utils/native/base:utils",
+    "//foundation/multimedia/image_standard/interfaces/innerkits:image",
+    "//foundation/multimedia/image_standard/interfaces/innerkits:image_native",
+    "//third_party/zlib:libz",
+    "//third_party/libuv:uv_static",
+    "${utils_path}:wallpaper_utils",
+    "//base/hiviewdfx/hiview/adapter/utility:hiview_adapter_utility",
+  ]
+  external_deps = [
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "hiviewdfx_hilog_native:libhilog",
+    "samgr_standard:samgr_proxy",
+  ]
+  subsystem_name = "miscservices"
+  part_name = "wallpaper_native"
+}
+
+ohos_prebuilt_etc("wallpaperdefault.jpeg") {
+  source = "data/wallpaperdefault.jpeg"
+  part_name = "wallpaper_native"
+  subsystem_name = "miscservices"
+}
+ohos_prebuilt_etc("wallpaperlockdefault.jpeg") {
+  source = "data/wallpaperlockdefault.jpeg"
+  part_name = "wallpaper_native"
+  subsystem_name = "miscservices"
+}

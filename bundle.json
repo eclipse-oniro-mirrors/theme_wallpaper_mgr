@@ -1,0 +1,64 @@
+{
+    "name": "@ohos/wallpaper",
+    "description": "Allowing apps to use OS wallpaper get/set functions",
+    "version": "3.1",
+    "license": "Apache License 2.0",
+    "publishAs": "code-segment",
+    "segment": {
+      "destPath": "base/miscservices/wallpaper"
+    },
+    "dirs": {},
+    "scripts": {},
+    "component": {
+      "name": "wallpaper_native",
+      "subsystem": "miscservices",
+      "syscap": [
+        "SystemCapability.Miscservices.WallpaperFrameworks"
+      ],
+      "features": [
+      ],
+      "adapted_system_type": [
+        "standard"
+      ],
+      "rom":"60MB",
+      "ram":"128MB",
+      "deps": {
+        "components": [
+          "ability_manager",
+          "aafwk_standard",
+          "appexecfwk_standard",
+          "ans_standard",
+          "ces_standard",
+          "distributeddatamgr",
+          "hisysevent_native",
+          "hiviewdfx_hilog_native",
+          "ipc",
+          "permission_standard",
+          "safwk",
+          "samgr_standard",
+          "startup_l2",
+          "utils_base"
+        ],
+        "third_party": [
+          "jsoncpp"
+        ]
+      },
+      "build": {
+        "sub_component": [
+          "//base/miscservices/wallpaper:wallpaper_native_packages",
+          "//base/miscservices/wallpaper/frameworks/innerkitsimpl/wallpaper_manager:wallpapermanager",
+          "//base/miscservices/wallpaper/frameworks/kits/extension:wallpaperextension",
+          "//base/miscservices/wallpaper/frameworks/kits/extension:wallpaper_extension_module",
+          "//base/miscservices/wallpaper/interfaces/kits/napi/wallpaperextension:wallpaperextension_napi",
+          "//base/miscservices/wallpaper/interfaces/kits/napi/wallpaper_extension_context:wallpaperextensioncontext_napi",
+          "//base/miscservices/wallpaper/interfaces/kits/napi:wallpaperability",
+          "//base/miscservices/wallpaper/utils:wallpaper_utils",
+          "//base/miscservices/wallpaper/frameworks/innerkitsimpl/wallpaper_manager:wallpaperdefault.jpeg",
+          "//base/miscservices/wallpaper/frameworks/innerkitsimpl/wallpaper_manager:wallpaperlockdefault.jpeg"
+        ],
+        "test": [
+          "//base/miscservices/wallpaper/test:wallpaper_test"
+        ]
+      }
+    }
+  }
