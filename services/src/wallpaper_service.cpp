@@ -422,13 +422,15 @@ bool WallpaperService::MakeCropWallpaper(int wallpaperType)
     }
     int32_t pictrueHeight = wallpaperPixelMap->GetHeight();
     int32_t pictrueWidth = wallpaperPixelMap->GetWidth();
-    if (pictrueHeight > SCREEN_HEIGHT && pictrueWidth > SCREEN_WIDTH) {
-        decodeOpts.CropRect.top = (pictrueHeight - SCREEN_HEIGHT)/HALF;
-        decodeOpts.CropRect.width = SCREEN_WIDTH;
-        decodeOpts.CropRect.left = (pictrueWidth - SCREEN_WIDTH)/HALF;
-        decodeOpts.CropRect.height = SCREEN_HEIGHT;
-        decodeOpts.desiredSize.width = SCREEN_WIDTH;
-        decodeOpts.desiredSize.height = SCREEN_HEIGHT;
+    int pyScrWidth = GetWallpaperMinWidth();
+    int pyScrHeight = GetWallpaperMinHeight();
+    if (pictrueHeight > pyScrHeight && pictrueWidth > pyScrWidth) {
+        decodeOpts.CropRect.top = (pictrueHeight - pyScrHeight)/HALF;
+        decodeOpts.CropRect.width = pyScrWidth;
+        decodeOpts.CropRect.left = (pictrueWidth - pyScrWidth)/HALF;
+        decodeOpts.CropRect.height = pyScrHeight;
+        decodeOpts.desiredSize.width = pyScrWidth;
+        decodeOpts.desiredSize.height = pyScrHeight;
     }
     wallpaperPixelMap = imageSource->CreatePixelMap(decodeOpts, errorCode);
     if (errorCode != 0) {
@@ -683,30 +685,41 @@ int  WallpaperService::GetWallpaperId(int wallpaperType)
 int  WallpaperService::GetWallpaperMinHeight()
 {
     HILOG_INFO("WallpaperService::GetWallpaperMinHeight --> start ");
-    int iWallpaperMinHeight = 960;
+    auto display = Rosen::DisplayManager::GetInstance().GetDefaultDisplay();
+    int iWallpaperMinHeight = display->GetHeight();
+    HILOG_INFO("WallpaperService height: %{public}d", iWallpaperMinHeight);
     return iWallpaperMinHeight;
 }
 
 int  WallpaperService::GetWallpaperMinWidth()
 {
     HILOG_INFO("WallpaperService::GetWallpaperMinWidth --> start ");
-    int iWallpaperMinWidth = 480;
+    auto display = Rosen::DisplayManager::GetInstance().GetDefaultDisplay();
+    int iWallpaperMinWidth = display->GetWidth();
+    HILOG_INFO("WallpaperService width: %{public}d", iWallpaperMinWidth);
     return iWallpaperMinWidth;
 }
 
 bool WallpaperService::IsChangePermitted()
 {
-    bool bFlag = false;
-    string permissionName = WALLPAPER_PERMISSION_NAME_SET_WALLPAPER;
-    std::int32_t uid = IPCSkeleton::GetCallingUid();
-    std::string bundleName;
-    if (!WPGetBundleNameByUid(uid, bundleName)) {
-        return false;
+    bool bflag = false;
+    int result;
+    Security::AccessToken::AccessTokenID callerToken = IPCSkeleton::GetCallingTokenID();
+    if (Security::AccessToken::AccessTokenKit::GetTokenTypeFlag(callerToken ) == Security::AccessToken::TOKEN_NATIVE) {
+       result =  Security::AccessToken::AccessTokenKit::VerifyNativeToken(callerToken, WALLPAPER_PERMISSION_NAME_SET_WALLPAPER);
+    } else if (Security::AccessToken::AccessTokenKit::GetTokenTypeFlag(callerToken ) == Security::AccessToken::TOKEN_HAP) {
+       result =  Security::AccessToken::AccessTokenKit::VerifyAccessToken(callerToken, WALLPAPER_PERMISSION_NAME_SET_WALLPAPER);
+    } else {
+       HILOG_INFO("Check permission tokenId ilegal");
+       return false;
     }
-
-    HILOG_INFO("Check permission: %{public}s", permissionName.c_str());
-    bFlag = Security::Permission::PermissionKit::CanRequestPermission(bundleName, permissionName, userId_);
-    return bFlag;
+    if(result == Security::AccessToken::TypePermissionState::PERMISSION_GRANTED) {
+        bflag = true;
+    } else {
+        bflag = false;
+    }
+    HILOG_INFO("Check permission result %{public}d", result);
+    return bflag;
 }
 
 bool WallpaperService::IsOperationAllowed()

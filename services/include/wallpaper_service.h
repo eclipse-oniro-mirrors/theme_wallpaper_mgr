@@ -33,7 +33,9 @@
 #include "wm_common.h"
 #include "window_option.h"
 #include "surface_buffer.h"
-
+#include "display_manager.h"
+#include "ipc_skeleton.h"
+#include "accesstoken_kit.h"
 
 
 namespace OHOS {
