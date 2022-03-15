@@ -145,25 +145,63 @@ wallpaper.setWallpaper(pixelmap, WALLPAPER_SYSTEM).then((data) => {
 
 js 应用接口使用说明
 ```
-应用需要继承wallpaperextension，实现里面的接口，其中setUiContent不需要重新
+import Extension from '@ohos.application.WallpaperExtension'
+import wallPaper from '@ohos.app.wallpaperability'
 
-onCreated(want) {
-    // 回调部分， 如静态壁纸先获取壁纸图片
-    wallpaper.getPixelMap(WALLPAPER_SYSTEM).then((data) => {
-            // 使用data更新布局数据
-            console.info('wallpaperXTS ===> testGetPixelMapPromiseSystem data : ' + data);
-            console.info('wallpaperXTS ===> testGetPixelMapPromiseSystem data : ' + JSON.stringify(data));
+export default class WallpaperExtAbility extends Extension {
+    onCreated(want) {
+        console.info(MODULE_TAG + 'ability on created start');
+        super.setUiContent("pages/index");
+        console.info(MODULE_TAG + 'ability on created end');
+    }
 
-        }).catch((err) => {
-            console.info('wallpaperXTS ===> testGetPixelMapPromiseSystem err : ' + err);
-            console.info('wallpaperXTS ===> testGetPixelMapPromiseSystem err : ' + JSON.stringify(err));
+    onWallpaperChanged(wallpaperType) {
+        console.info(MODULE_TAG + "ability on wallpaper changed start, type is : " + wallpaperType);
+        if (wallPaper) {
+            this.sendPixelMapData();
+        }
+       console.info(MODULE_TAG + "ability on wallpaper changed end");
+    }
 
+    onDestroy() {
+        console.info(MODULE_TAG + 'ability on destroy');
+    }
+
+    initWallpaperImage() {
+        console.info(MODULE_TAG + 'ability init wallpaper image start');
+        if (!wallPaper) {
+            console.info(MODULE_TAG + "ability init wallpaper image failed as wallpaper is null");
+            return;
+        }
+        this.sendPixelMapData()
+        console.info(MODULE_TAG + 'ability init wallpaper image end');
+    }
+
+    sendPixelMapData() {
+        // 0 is WallpaperType:WALLPAPER_SYSTEM, 1 isWallpaperType:WALLPAPER_LOCKSCREEN
+        wallPaper.getPixelMap(0, (err, data) => {
+            console.info(MODULE_TAG + "ability get pixel map data start");
+            if (err) {
+                console.info(MODULE_TAG + "ability get pixel map failed, error : " + JSON.stringify(err));
+            } else {
+                console.info(MODULE_TAG + "ability get pixel map, data : " + JSON.stringify(data));
+                AppStorage.SetOrCreate('slPixelData', data);
+            }
+            console.info(MODULE_TAG + "ability get pixel map data end");
         });
+    }
+};
 
-    //加载页面布局
-    wallpaper.setUiContent(url);
-
-}
+wallpaper.getWallpaperExtension((error, extension) => {  
+    if (error) {
+        console.error(` failed to getWallpaperExtensionInfo because: ` + JSON.stringify(error));
+        return;
+    }
+    console.log(`success to getWallpaperExtensionInfo`);
+    console.log(`current wallpaper extension's name: ` + extension.context.currentHapModuleInfo.name);
+    console.log(`current wallpaper extension's description: ` + extension.context.currentHapModuleInfo.description);
+    console.log(`current wallpaper extension's icon: ` + extension.context.currentHapModuleInfo.icon);
+});
 ```
 
 ## 相关仓
