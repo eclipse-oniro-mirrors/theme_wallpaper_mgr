@@ -36,6 +36,8 @@
 #include "display_manager.h"
 #include "ipc_skeleton.h"
 #include "accesstoken_kit.h"
+#include "image_source.h"
+
 
 namespace OHOS {
 namespace WallpaperMgrService {
@@ -114,6 +116,7 @@ private:
     bool WPGetBundleNameByUid(std::int32_t uid, std::string &bname);
     bool MakeCropWallpaper(int wallpaperType);
     bool SetWallpaperBackupData(std::string uriOrPixelMap, int wallpaperType);
+    std::unique_ptr<OHOS::Media::ImageSource> GetImageSource(int length, int fd);
 
 private:
     void StartExt();
