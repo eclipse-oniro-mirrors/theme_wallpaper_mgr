@@ -197,10 +197,6 @@ wallpaper.getWallpaperExtension((error, extension) => {
         console.error(` failed to getWallpaperExtensionInfo because: ` + JSON.stringify(error));
         return;
     }
-    console.log(`success to getWallpaperExtensionInfo`);
-    console.log(`current wallpaper extension's name: ` + extension.context.currentHapModuleInfo.name);
-    console.log(`current wallpaper extension's description: ` + extension.context.currentHapModuleInfo.description);
-    console.log(`current wallpaper extension's icon: ` + extension.context.currentHapModuleInfo.icon);
 });
 ```
 
