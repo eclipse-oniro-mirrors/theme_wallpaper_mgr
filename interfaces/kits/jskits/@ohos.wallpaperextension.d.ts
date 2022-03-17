@@ -14,33 +14,56 @@
  */
 
 /**
- * WallpaperExtension
- * @sysCap SystemCapability.Miscservices.Wallpaper
- * @devices phone, tablet, tv, wearable, car
- * @import import WallpaperExtension from '@ohos.application.WallpaperExtension';
- * @since 7
- */
+* class of wallpaper extension.
+*
+* @systemapi Hide this for inner system use.
+* @since 9
+* @sysCap SystemCapability.Miscservices.Wallpaper
+* @StageModelOnly
+*/
 declare class WallpaperExtension {
     /**
-     * Called once to initialize the engine.
+     * Called once to initialize the extension.
+     *
+     * @systemapi Hide this for inner system use.
+     * @since 9
+     * @sysCap SystemCapability.Miscservices.Wallpaper
+     * @return -
+     * @StageModelOnly
      */
     onCreated(want: object): void;
 
     /**
-     * the wallpaper's size is changed.
+     * Called when the extension's size is changed.
+     * @systemapi Hide this for inner system use.
+     * @since 9
+     * @sysCap SystemCapability.Miscservices.Wallpaper
      * @param width Indicates the wallpaper width
      * @param height Indicates the wallpaper height
      */
     onWallpaperChanged(wallpaperType: number): void;
 
     /**
-     * set UI layout
-     * @param url the ui layout 
+     * Called to set ui content of the extension.
+     *
+     * @systemapi Hide this for inner system use.
+     * @since 9
+     * @param context extension's context
+     * @param url the url of the ui layout file
+     * @sysCap SystemCapability.Miscservices.Wallpaper
+     * @return -
+     * @StageModelOnly
      */
     setUiContent(url:string): void;
 
     /**
-     * Called once the engine is destroyed.
+     * Called once to destroy the exten.
+     *
+     * @systemapi Hide this for inner system use.
+     * @since 9
+     * @sysCap SystemCapability.Miscservices.Wallpaper
+     * @return -
+     * @StageModelOnly
      */
     onDestroy(): void;
 }
