@@ -3,7 +3,7 @@
 ## 简介
 
 ### 内容介绍
-该仓主要为系统提供壁纸服务能力，支持系统显示、设置/切换壁纸等功能；同时为开发者提供开发壁纸的框架和接口，支持开发者开发壁纸应用。
+该仓主要为系统提供壁纸服务能力，支持系统显示、设置、切换壁纸等功能。
 
 ### 架构图介绍
 **图 1** 子系统架构图  
@@ -191,16 +191,6 @@ export default class WallpaperExtAbility extends Extension {
     }
 };
 
-wallpaper.getWallpaperExtension((error, extension) => {  
-    if (error) {
-        console.error(` failed to getWallpaperExtensionInfo because: ` + JSON.stringify(error));
-        return;
-    }
-    console.log(`success to getWallpaperExtensionInfo`);
-    console.log(`current wallpaper extension's name: ` + extension.context.currentHapModuleInfo.name);
-    console.log(`current wallpaper extension's description: ` + extension.context.currentHapModuleInfo.description);
-    console.log(`current wallpaper extension's icon: ` + extension.context.currentHapModuleInfo.icon);
-});
 ```
 
 ## 相关仓
