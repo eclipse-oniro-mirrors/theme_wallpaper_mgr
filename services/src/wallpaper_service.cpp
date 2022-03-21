@@ -665,36 +665,19 @@ IWallpaperService::mapFD  WallpaperService::GetPixelMap(int wallpaperType)
         return mapFd;
     }
     int fend = fseek(pixmap, 0, SEEK_END);
-    if (fend != 0) {
-        HILOG_ERROR("fseek faild");
-        fclose(pixmap);
-        mtx.unlock();
-        return mapFd;
-    }
     int length = ftell(pixmap);
-    if (length <= 0) {
-        HILOG_ERROR("ftell faild");
+    int fset = fseek(pixmap, 0, SEEK_SET);
+    if (length <= 0 || fend != 0 || fset != 0) {
+        HILOG_ERROR("ftell faild or fseek faild");
         fclose(pixmap);
         mtx.unlock();
         return mapFd;
     }
     
     mapFd.size = length;
-    int fset = fseek(pixmap, 0, SEEK_SET);
-    if (fset != 0) {
-        HILOG_ERROR("fseek faild");
-        fclose(pixmap);
-        mtx.unlock();
-        return mapFd;
-    }
     int closeRes = fclose(pixmap);
-    if (closeRes != 0) {
-        HILOG_ERROR("fclose faild");
-        mtx.unlock();
-        return mapFd;
-    }
     int fd = open(filePath.c_str(), O_RDONLY, 0770);
-    if (fd < 0) {
+    if (closeRes != 0 || fd < 0) {
         HILOG_ERROR("open faild");
         mtx.unlock();
         return mapFd;
