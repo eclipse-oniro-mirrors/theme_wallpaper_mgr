@@ -637,9 +637,8 @@ IWallpaperService::mapFD  WallpaperService::GetPixelMap(int wallpaperType)
     mapFD mapFd;
     HILOG_INFO("WallpaperService::getPixelMap --> start ");
     bool perGet = WPCheckCallingPermission(WALLPAPER_PERMISSION_NAME_GET_WALLPAPER);
-    bool perUserStorage = WPCheckCallingPermission(WALLPAPER_PERMISSION_NAME_READ_USER_STORAGE);
-    if (!perGet || !perUserStorage) {
-        HILOG_INFO("GetPixelMap no get or no user read permission!");
+    if (!perGet) {
+        HILOG_INFO("GetPixelMap no get permission!");
         mtx.unlock();
         return mapFd;
     }
