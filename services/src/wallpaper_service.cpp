@@ -961,11 +961,11 @@ bool WallpaperService::WPCheckCallingPermission(const std::string &permissionNam
     Security::AccessToken::AccessTokenID callerToken = IPCSkeleton::GetCallingTokenID();
     if (Security::AccessToken::AccessTokenKit::GetTokenTypeFlag(callerToken) == Security::AccessToken::TOKEN_NATIVE) {
         result =  Security::AccessToken::AccessTokenKit::VerifyNativeToken(callerToken,
-        WALLPAPER_PERMISSION_NAME_SET_WALLPAPER);
+        permissionName);
     } else if (Security::AccessToken::AccessTokenKit::GetTokenTypeFlag(callerToken) ==
         Security::AccessToken::TOKEN_HAP) {
         result =  Security::AccessToken::AccessTokenKit::VerifyAccessToken(callerToken,
-        WALLPAPER_PERMISSION_NAME_SET_WALLPAPER);
+        permissionName);
     } else {
         HILOG_INFO("Check permission tokenId ilegal");
         return false;
