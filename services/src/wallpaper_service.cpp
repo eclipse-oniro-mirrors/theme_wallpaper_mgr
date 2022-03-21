@@ -638,7 +638,7 @@ IWallpaperService::mapFD  WallpaperService::GetPixelMap(int wallpaperType)
     mtx.lock();
     mapFD mapFd;
     HILOG_INFO("WallpaperService::getPixelMap --> start ");
-    bool perGet = WPCheckCallingPermission(WALLPAPER_PERMISSION_NAME_SET_WALLPAPER);
+    bool perGet = WPCheckCallingPermission(WALLPAPER_PERMISSION_NAME_GET_WALLPAPER);
     bool perUserStorage = WPCheckCallingPermission(WALLPAPER_PERMISSION_NAME_READ_USER_STORAGE);
     if (!perGet || !perUserStorage) {
         HILOG_INFO("GetPixelMap no get or no user read permission!");
@@ -967,11 +967,11 @@ bool WallpaperService::WPCheckCallingPermission(const std::string &permissionNam
     Security::AccessToken::AccessTokenID callerToken = IPCSkeleton::GetCallingTokenID();
     if (Security::AccessToken::AccessTokenKit::GetTokenTypeFlag(callerToken) == Security::AccessToken::TOKEN_NATIVE) {
         result =  Security::AccessToken::AccessTokenKit::VerifyNativeToken(callerToken,
-        WALLPAPER_PERMISSION_NAME_SET_WALLPAPER);
+        permissionName);
     } else if (Security::AccessToken::AccessTokenKit::GetTokenTypeFlag(callerToken) ==
         Security::AccessToken::TOKEN_HAP) {
         result =  Security::AccessToken::AccessTokenKit::VerifyAccessToken(callerToken,
-        WALLPAPER_PERMISSION_NAME_SET_WALLPAPER);
+        permissionName);
     } else {
         HILOG_INFO("Check permission tokenId ilegal");
         return false;
