@@ -452,7 +452,6 @@ bool WallpaperService::MakeCropWallpaper(int wallpaperType)
 
 bool WallpaperService::SetWallpaperByMap(int fd, int wallpaperType, int length)
 {
-    
     HILOG_INFO("SetWallpaperByMap");
     bool permissionSet = WPCheckCallingPermission(WALLPAPER_PERMISSION_NAME_SET_WALLPAPER);
     if (!permissionSet) {
