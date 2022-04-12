@@ -106,7 +106,7 @@ ohos_shared_library("wallpaperextension") {
     "//foundation/distributeddatamgr/appdatamgr/frameworks/jskitsimpl/common/include",
     "//foundation/distributeddatamgr/appdatamgr/frameworks/jskitsimpl/napi_dataability/include",
     "//foundation/distributeddatamgr/appdatamgr/frameworks/jskitsimpl/napi_resultset/include",
-    "//base/global/i18n_standard/frameworks/intl/include",
+    "//base/global/i18n/frameworks/intl/include",
   ]
 
   sources = [
@@ -166,7 +166,7 @@ ohos_shared_library("wallpaperextension") {
   ]
 
   public_deps = [
-    "//base/global/i18n_standard/frameworks/intl:intl_util",
+    "//base/global/i18n/frameworks/intl:intl_util",
     "//base/global/resmgr_standard/frameworks/resmgr:global_resmgr",
     "//base/hiviewdfx/hilog/interfaces/native/innerkits:libhilog",
     "//foundation/ace/napi:ace_napi",
