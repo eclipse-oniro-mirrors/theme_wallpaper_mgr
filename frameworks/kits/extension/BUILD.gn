@@ -102,10 +102,10 @@ ohos_shared_library("wallpaperextension") {
     "//base/miscservices/wallpaper/frameworks/innerkitsimpl/wallpaper_manager/include",
     "//base/miscservices/wallpaper/frameworks/kits/extension/include",
     "//foundation/aafwk/standard/interfaces/innerkits/uri/include",
-    "//foundation/distributeddatamgr/appdatamgr/frameworks/jskitsimpl/napi_rdb/include",
-    "//foundation/distributeddatamgr/appdatamgr/frameworks/jskitsimpl/common/include",
-    "//foundation/distributeddatamgr/appdatamgr/frameworks/jskitsimpl/napi_dataability/include",
-    "//foundation/distributeddatamgr/appdatamgr/frameworks/jskitsimpl/napi_resultset/include",
+    "//foundation/distributeddatamgr/appdatamgr/frameworks/js/napi/rdb/include",
+    "//foundation/distributeddatamgr/appdatamgr/frameworks/js/napi/common/include",
+    "//foundation/distributeddatamgr/appdatamgr/frameworks/js/napi/dataability/include",
+    "//foundation/distributeddatamgr/appdatamgr/frameworks/js/napi/resultset/include",
     "//base/global/i18n/frameworks/intl/include",
   ]
 
