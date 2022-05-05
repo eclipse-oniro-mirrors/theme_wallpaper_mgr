@@ -37,7 +37,7 @@ config("ability_config") {
 
     #"//foundation/distributedschedule/dmsfwk/services/dtbschedmgr/include",
     "//foundation/aafwk/standard/interfaces/innerkits/uri/include",
-    "//base/global/resmgr_standard/interfaces/innerkits/include",
+    "//base/global/resource_management/interfaces/innerkits/include",
     "//foundation/aafwk/standard/interfaces/kits/napi/aafwk/featureAbility",
     "//foundation/arkui/napi/interfaces/kits",
     "//third_party/node/src",
@@ -80,7 +80,7 @@ config("ability_public_config") {
     "//foundation/aafwk/standard/frameworks/kits/ability/native/include/continuation/distributed",
     "//foundation/aafwk/standard/frameworks/kits/ability/native/include/distributed_ability_runtime",
     "//foundation/aafwk/standard/interfaces/innerkits/ability_manager/include/continuation",
-    "//base/global/resmgr_standard/interfaces/innerkits/include",
+    "//base/global/resource_management/interfaces/innerkits/include",
     "//foundation/aafwk/standard/frameworks/kits/ability/native/include/continuation/kits",
     "//foundation/aafwk/standard/frameworks/kits/fmskit/native/include",
     "//foundation/aafwk/standard/interfaces/innerkits/form_manager/include",
@@ -157,7 +157,7 @@ ohos_shared_library("wallpaperextension") {
 
   public_deps = [
     "//base/global/i18n/frameworks/intl:intl_util",
-    "//base/global/resmgr_standard/frameworks/resmgr:global_resmgr",
+    "//base/global/resource_management/frameworks/resmgr:global_resmgr",
     "//base/hiviewdfx/hilog/interfaces/native/innerkits:libhilog",
     "//foundation/arkui/napi:ace_napi",
     "//foundation/graphic/standard:libwmclient",
