@@ -9,6 +9,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import("//base/miscservices/wallpaper/wallpaper.gni")
 import("//build/test.gni")
 
 ## UnitTest wallpaper_test {{{
@@ -31,9 +32,9 @@ ohos_unittest("wallpaper_test") {
     #"//foundation/multimedia/image_standard/interfaces/innerkits/include",
   ]
   deps = [
+    "${aafwk_kits_path}/ability/native:abilitykit_native",
     "//base/hiviewdfx/hiview/adapter/utility:hiview_adapter_utility",
     "//base/miscservices/wallpaper/frameworks/innerkitsimpl/wallpaper_manager:wallpapermanager",
-    "//foundation/aafwk/standard/frameworks/kits/ability/native:abilitykit_native",
     "//foundation/multimedia/image_standard:image_framework",
     "//foundation/multimedia/image_standard/interfaces/innerkits:image",
     "//foundation/multimedia/image_standard/interfaces/innerkits:image_native",

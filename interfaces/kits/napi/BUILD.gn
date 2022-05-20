@@ -18,7 +18,7 @@ ohos_shared_library("wallpaperability") {
   include_dirs = [
     "//foundation/arkui/napi/interfaces/kits",
     "//third_party/node/src",
-    "//foundation/aafwk/standard/services/common/include",
+    "${aafwk_services_path}/common/include",
     "//utils/system/safwk/native/include",
     "//base/miscservices/wallpaper/interfaces/kits/napi",
     "//base/miscservices/wallpaper/frameworks/innerkitsimpl/wallpaper_manager/include",
@@ -34,10 +34,10 @@ ohos_shared_library("wallpaperability") {
     "wallpaper_js_util.cpp",
   ]
   deps = [
+    "${aafwk_kits_path}/appkit:appkit_native",
+    "${aafwk_services_path}/appmgr:libappms",
     "${utils_path}:wallpaper_utils",
     "//base/miscservices/wallpaper/frameworks/innerkitsimpl/wallpaper_manager:wallpapermanager",
-    "//foundation/aafwk/standard/frameworks/kits/appkit:appkit_native",
-    "//foundation/aafwk/standard/services/appmgr:libappms",
     "//foundation/arkui/napi:ace_napi",
     "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:distributeddata_inner",
     "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",

@@ -11,8 +11,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import("//build/ohos.gni")
 import("//base/miscservices/wallpaper/wallpaper.gni")
+import("//build/ohos.gni")
 
 config("wallpaper_manager_config") {
   visibility = [ ":*" ]
@@ -27,33 +27,31 @@ config("wallpaper_manager_config") {
 
 ohos_shared_library("wallpapermanager") {
   sources = [
-    "src/wallpaper_manager.cpp",
-    "src/wallpaper_service_proxy.cpp",
-    "src/wallpaper_service_cb_stub.cpp",
-    "src/wallpaper_manager_kits.cpp",
     "src/iwallpaper_color_change_listener.cpp",
     "src/wallpaper_color_change_listener_client.cpp",
+    "src/wallpaper_manager.cpp",
+    "src/wallpaper_manager_kits.cpp",
+    "src/wallpaper_service_cb_stub.cpp",
+    "src/wallpaper_service_proxy.cpp",
+
     #"src/wallpaper_callback_stub.cpp",
   ]
-  public_configs = [
-    ":wallpaper_manager_config",
-  ]
-   include_dirs = [
-  ]
+  public_configs = [ ":wallpaper_manager_config" ]
+  include_dirs = []
   deps = [
-    "//base/miscservices/wallpaper/services:wallpaper_service",
-    "//utils/native/base:utils",
-    "//foundation/multimedia/image_standard/interfaces/innerkits:image",
-    "//foundation/multimedia/image_standard/interfaces/innerkits:image_native",
-    "//third_party/zlib:libz",
-    "//third_party/libuv:uv_static",
     "${utils_path}:wallpaper_utils",
     "//base/hiviewdfx/hiview/adapter/utility:hiview_adapter_utility",
+    "//base/miscservices/wallpaper/services:wallpaper_service",
+    "//foundation/multimedia/image_standard/interfaces/innerkits:image",
+    "//foundation/multimedia/image_standard/interfaces/innerkits:image_native",
+    "//third_party/libuv:uv_static",
+    "//third_party/zlib:libz",
+    "//utils/native/base:utils",
   ]
   external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
     "ipc:ipc_core",
     "safwk:system_ability_fwk",
-    "hiviewdfx_hilog_native:libhilog",
     "samgr_standard:samgr_proxy",
   ]
   subsystem_name = "miscservices"
