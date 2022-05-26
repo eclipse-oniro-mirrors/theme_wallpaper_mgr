@@ -32,7 +32,7 @@ uint32_t ConvertToUint32(const uint8_t* ptr)
 {
     if (ptr == nullptr) {
         return 0;
-    }   
+    }
     uint32_t bigVar = (ptr[0] << 24) | (ptr[1] << 16) | (ptr[2] << 8) | (ptr[3]);
     return bigVar;
 }
@@ -68,5 +68,3 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)
     OHOS::FuzzWallpaperService(data, size);
     return 0;
 }
-
-
