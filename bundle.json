@@ -57,7 +57,7 @@
           "//base/miscservices/wallpaper/frameworks/innerkitsimpl/wallpaper_manager:wallpaperlockdefault.jpeg"
         ],
         "test": [
-          "//base/miscservices/wallpaper/test:wallpaper_test"
+          "//base/miscservices/wallpaper/test:wallpaper_test",
           "//base/miscservices/wallpaper/test/fuzztest:fuzztest"
         ]
       }
