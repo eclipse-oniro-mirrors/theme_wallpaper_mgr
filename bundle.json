@@ -58,6 +58,7 @@
         ],
         "test": [
           "//base/miscservices/wallpaper/test:wallpaper_test"
+          "//base/miscservices/wallpaper/test/fuzztest:fuzztest"
         ]
       }
     }
