@@ -254,7 +254,6 @@ int64_t WallpaperManager::WritePixelMapToFile(const std::string &filePath,
 }
 std::shared_ptr<OHOS::Media::PixelMap> WallpaperManager::GetPixelMap(int wallpaperType)
 {
-    std::unique_ptr<OHOS::Media::PixelMap> tmp = std::make_unique<OHOS::Media::PixelMap>();
     HILOG_INFO("FrameWork GetPixelMap Start by FD");
     auto wpServerProxy = GetService();
     if (wpServerProxy == nullptr) {
@@ -274,7 +273,8 @@ std::shared_ptr<OHOS::Media::PixelMap> WallpaperManager::GetPixelMap(int wallpap
     }
     OHOS::Media::DecodeOptions decodeOpts;
     HILOG_INFO(" CreatePixelMap");
-    tmp = imageSource->CreatePixelMap(decodeOpts, errorCode);
+    std::unique_ptr<OHOS::Media::PixelMap> tmp = imageSource->CreatePixelMap(decodeOpts, errorCode);
+
     if (errorCode != 0) {
         HILOG_ERROR("ImageSource::CreatePixelMap failed,errcode= %{public}d", errorCode);
         return nullptr;
