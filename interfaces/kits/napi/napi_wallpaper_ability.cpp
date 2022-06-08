@@ -337,7 +337,7 @@ napi_value NAPI_ScreenshotLiveWallpaper(napi_env env, napi_callback_info info)
     return ret;
 }
 
-std::shared_ptr<WallpaperMgrService::WallpaperColorChangeListener> colorChangeListener_;
+thread_local std::shared_ptr<WallpaperMgrService::WallpaperColorChangeListener> colorChangeListener_;
 
 napi_value NAPI_On(napi_env env, napi_callback_info info)
 {
