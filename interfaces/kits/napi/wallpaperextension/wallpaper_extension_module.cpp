@@ -25,7 +25,7 @@ void NAPI_application_WallpaperExtension_AutoRegister()
 {
     auto moduleManager = NativeModuleManager::GetInstance();
     NativeModule newModuleInfo = {
-        .name = "application.wallpaperextension",
+        .name = "wallpaperextension",
         .fileName = "libwallpaperextension_napi.so/WallpaperExtension.js",
     };
 
