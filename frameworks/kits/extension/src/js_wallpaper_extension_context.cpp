@@ -143,7 +143,7 @@ private:
 
         NativeValue* lastParam = (info.argc == unwrapArgc) ? nullptr : info.argv[unwrapArgc];
         NativeValue* result = nullptr;
-        AsyncTask::Schedule(
+        AsyncTask::Schedule("WallpaperExtensionContext::OnStartAbility",
             engine, CreateAsyncTaskWithLastParam(engine, lastParam, nullptr, std::move(complete), &result));
         return result;
     }
@@ -207,7 +207,7 @@ private:
 
         NativeValue* lastParam = (info.argc == unwrapArgc) ? nullptr : info.argv[unwrapArgc];
         NativeValue* result = nullptr;
-        AsyncTask::Schedule(
+        AsyncTask::Schedule("WallpaperExtensionContext::OnStartAbilityWithAccount",
             engine, CreateAsyncTaskWithLastParam(engine, lastParam, nullptr, std::move(complete), &result));
         return result;
     }
@@ -241,7 +241,7 @@ private:
 
         NativeValue* lastParam = (info.argc == ARGC_ZERO) ? nullptr : info.argv[INDEX_ZERO];
         NativeValue* result = nullptr;
-        AsyncTask::Schedule(
+        AsyncTask::Schedule("WallpaperExtensionContext::OnTerminateAbility",
             engine, CreateAsyncTaskWithLastParam(engine, lastParam, nullptr, std::move(complete), &result));
         return result;
     }
@@ -293,7 +293,7 @@ private:
                 task.Resolve(engine, engine.CreateUndefined());
             };
         NativeValue* result = nullptr;
-        AsyncTask::Schedule(
+        AsyncTask::Schedule("WallpaperExtensionContext::OnConnectAbility",
             engine, CreateAsyncTaskWithLastParam(engine, nullptr, nullptr, std::move(complete), &result));
         return engine.CreateNumber(connectId);
     }
@@ -354,7 +354,7 @@ private:
                     task.Resolve(engine, engine.CreateUndefined());
                 };
         NativeValue* result = nullptr;
-        AsyncTask::Schedule(
+        AsyncTask::Schedule("WallpaperExtensionContext::OnConnectAbilityWithAccount",
             engine, CreateAsyncTaskWithLastParam(engine, nullptr, nullptr, std::move(complete), &result));
         return engine.CreateNumber(connectId);
     }
@@ -413,7 +413,7 @@ private:
 
         NativeValue* lastParam = (info.argc == ARGC_ONE) ? nullptr : info.argv[INDEX_ONE];
         NativeValue* result = nullptr;
-        AsyncTask::Schedule(
+        AsyncTask::Schedule("WallpaperExtensionContext::OnDisconnectAbility",
             engine, CreateAsyncTaskWithLastParam(engine, lastParam, nullptr, std::move(complete), &result));
         return result;
     }
