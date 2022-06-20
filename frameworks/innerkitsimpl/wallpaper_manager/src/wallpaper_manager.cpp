@@ -30,7 +30,6 @@
 #include "iservice_registry.h"
 #include "system_ability_definition.h"
 #include "i_wallpaper_service.h"
-#include "permission.h"
 #include "image_source.h"
 #include "image_type.h"
 #include "image_packer.h"

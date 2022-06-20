@@ -36,7 +36,6 @@
 #include "time_util.h"
 #include "image_packer.h"
 #include "bundle_mgr_interface.h"
-#include "permission/permission_kit.h"
 #include "iservice_registry.h"
 #include "image/bitmap.h"
 #include "pixel_map.h"
