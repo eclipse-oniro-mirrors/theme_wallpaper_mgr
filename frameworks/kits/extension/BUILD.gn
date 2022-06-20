@@ -45,7 +45,6 @@ config("ability_config") {
     "${AAFWK_KITS_DIR}/include/distributed_ability_runtime",
     "${AAFWK_INNERKITS_PATH}/ability_manager/include/continuation",
     "${AAFWK_KITS_DIR}/include/continuation/kits",
-    "//base/security/permission/interfaces/innerkits/permission_standard/permissionsdk/main/cpp/include",
     "${aafwk_kits_path}/appkit/native/app/include/task",
     "//foundation/ability/ability_runtime/frameworks/js/napi/aafwk/inner/napi_common",
   ]
@@ -119,7 +118,6 @@ ohos_shared_library("wallpaperextension") {
     "${aafwk_kits_path}/ability/ability_runtime:ability_context_native",
     "${aafwk_kits_path}/appkit:app_context",
     "//base/miscservices/wallpaper/frameworks/innerkitsimpl/wallpaper_manager:wallpapermanager",
-    "//base/security/permission/interfaces/innerkits/permission_standard/permissionsdk:libpermissionsdk_standard",
     "//foundation/arkui/napi:ace_napi",
     "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
     "//foundation/multimodalinput/input/frameworks/proxy:libmmi-common",

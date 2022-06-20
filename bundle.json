@@ -33,7 +33,6 @@
           "hisysevent_native",
           "hiviewdfx_hilog_native",
           "ipc",
-          "permission_standard",
           "safwk",
           "samgr_standard",
           "startup_l2",
