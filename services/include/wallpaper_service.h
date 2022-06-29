@@ -148,6 +148,7 @@ private:
     static const std::string WALLPAPER_CROP;
     static const std::string WALLPAPER_LOCK_ORIG;
     static const std::string WALLPAPER_LOCK_CROP;
+    static const std::string WALLPAPER_BUNDLE_NAME;
     sptr<IWallpaperCallback> callbackProxy = nullptr;
 
     std::string name_;
