@@ -62,6 +62,7 @@ const std::string WallpaperService::WALLPAPER = "wallpaper_orig";
 const std::string WallpaperService::WALLPAPER_CROP = "wallpaper";
 const std::string WallpaperService::WALLPAPER_LOCK_ORIG = "wallpaper_lock_orig";
 const std::string WallpaperService::WALLPAPER_LOCK_CROP = "wallpaper_lock";
+const std::string WallpaperService::WALLPAPER_BUNDLE_NAME = "com.ohos.wallpaper";
 
 const std::int64_t INIT_INTERVAL = 10000L;
 constexpr int HALF = 2;
@@ -207,7 +208,7 @@ void WallpaperService::StartExt()
     int time = 0;
     ErrCode ret = 0;
     AAFwk::Want want;
-    want.SetElementName("com.example.ohosproject.hmservice", "WallpaperExtAbility");
+    want.SetElementName(WALLPAPER_BUNDLE_NAME, "WallpaperExtAbility");
     AAFwk::AbilityManagerClient::GetInstance()->Connect();
     HILOG_INFO("WallpaperService::Startwhile");
     while (1) {
@@ -228,7 +229,7 @@ void WallpaperService::OnBootPhase()
 {
     HILOG_INFO("WallpaperService OnBootPhase");
     AAFwk::Want want;
-    want.SetElementName("com.example.ohosproject.hmservice", "WallpaperExtAbility");
+    want.SetElementName(WALLPAPER_BUNDLE_NAME, "WallpaperExtAbility");
     AAFwk::AbilityManagerClient::GetInstance()->Connect();
     AAFwk::AbilityManagerClient::GetInstance()->StartAbility(want);
 }
