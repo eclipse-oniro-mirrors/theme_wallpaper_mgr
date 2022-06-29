@@ -24,11 +24,11 @@ enum class FaultCode {
     // Service Fault
     SF_SERVICE_UNAVAIABLE = 0,
     SF_SERVICE_SUBSCRIBECOMMINEVENT,
+    SF_STARTABILITY_FAILED,
 
     // Runtime Fault
     RF_DROP_FAILED = 10,
     RF_FD_INPUT_FAILED,
-    RF_STARTABILITY_FAILED,
 };
 
 enum class FaultType {

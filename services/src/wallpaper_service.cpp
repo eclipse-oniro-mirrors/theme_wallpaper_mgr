@@ -233,7 +233,7 @@ void WallpaperService::StartExt()
     }
     if (ret != 0) {
         HILOG_ERROR("WallpaperService::StartAbility --> failed ");
-        ReporterFault(FaultType::SERVICE_FAULT, FaultCode::RF_STARTABILITY_FAILED);
+        ReporterFault(FaultType::SERVICE_FAULT, FaultCode::SF_STARTABILITY_FAILED);
     }
 }
 void WallpaperService::OnBootPhase()

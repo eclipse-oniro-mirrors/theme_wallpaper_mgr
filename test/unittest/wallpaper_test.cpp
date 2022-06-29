@@ -432,7 +432,6 @@ HWTEST_F(WallpaperTest, DFX002, TestSize.Level0)
     FaultMsg msg;
     msg.faultType = FaultType::SET_WALLPAPER_FAULT;
     msg.errorCode = FaultCode::RF_DROP_FAILED;
-    msg.moduleName = "com.ohos.wallpaper";
     ReportStatus repStatus = Reporter::GetInstance().Fault().ReportRuntimeFault(msg);
     EXPECT_TRUE(repStatus == ReportStatus::SUCCESS);
 }

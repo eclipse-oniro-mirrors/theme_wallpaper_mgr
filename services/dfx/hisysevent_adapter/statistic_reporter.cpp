@@ -111,7 +111,7 @@ ReportStatus StatisticReporter::InvokeUsageTime(time_t curTime)
         return ReportStatus::ERROR;
     }
 
-    int nRet = HiSysEvent::Write(HiSysEvent::Domain::DISTRIBUTED_DATAMGR, USAGETIME_STATISTIC,
+    int nRet = HiSysEvent::Write(HiSysEvent::Domain::MISC_WALLPAPER, USAGETIME_STATISTIC,
         HiSysEvent::EventType::STATISTIC, WALLPAPER_INFO, statisicMsg);
     return nRet == 0 ? ReportStatus::SUCCESS : ReportStatus::ERROR;
 }
