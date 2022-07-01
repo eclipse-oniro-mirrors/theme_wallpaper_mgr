@@ -44,10 +44,10 @@ ohos_fuzztest("WallpaperServiceFuzzTest") {
   sources = [ "wallpaperservice_fuzzer.cpp" ]
 
   deps = [
+    "${ability_runtime_path}/frameworks/native/ability/native:abilitykit_native",
+    "${ability_runtime_services_path}/abilitymgr:abilityms",
     "${utils_path}:wallpaper_utils",
     "//base/miscservices/wallpaper/services:wallpaper_service",
-    "//foundation/ability/ability_runtime/frameworks/native/ability/native:abilitykit_native",
-    "//foundation/ability/ability_runtime/services/abilitymgr:abilityms",
     "//foundation/windowmanager/utils:libwmutil",
     "//foundation/windowmanager/wm:libwm",
   ]
