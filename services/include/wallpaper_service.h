@@ -73,7 +73,6 @@ public:
     bool RegisterWallpaperCallback(const sptr<IWallpaperCallback> callback) override;
     int Dump(int fd, const std::vector<std::u16string> &args) override;
 public:
-    void WallpaperDump(int fd);
     bool SetLockWallpaperCallback(IWallpaperManagerCallback* cb);
     static void OnBootPhase();
     void ReporterFault(MiscServices::FaultType faultType, MiscServices::FaultCode faultCode);

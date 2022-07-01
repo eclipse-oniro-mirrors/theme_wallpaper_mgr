@@ -17,26 +17,21 @@
 #define DISTRIBUTEDDATA_SERVICE_DUMPE_HELPER_H
 
 #include <functional>
+#include <map>
 #include <string>
 #include <vector>
-
-#include "singleton.h"
+#include "command.h"
 
 namespace OHOS {
 namespace MiscServices {
-class DumpHelper : public Singleton<DumpHelper> {
+class DumpHelper {
 public:
-    using DumpNoParamFunc = std::function<void(int)>;
-    DumpHelper() = default;
-    virtual ~DumpHelper() = default;
-    void AddDumpOperation(const DumpNoParamFunc &dumpAll);
-    bool Dump(int fd, const std::vector<std::string> &args);
+    static DumpHelper& GetInstance();
+    void RegisterCommand(Command &);
+    bool Dispatch(int fd, const std::vector<std::string> &args);
 
 private:
-    void ShowHelp(int fd);
-    void ShowIllealInfomation(int fd);
-    std::mutex hidumperMutex_;
-    DumpNoParamFunc dumpAll_;
+    std::map<std::string, Command> cmdHandler_;
 };
 } // namespace MiscServices
 } // namespace OHOS

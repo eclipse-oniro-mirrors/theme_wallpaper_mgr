@@ -14,73 +14,39 @@
  */
 
 #include "dump_helper.h"
-
+#include "hilog_wrapper.h"
+using namespace OHOS::WallpaperMgrService;
 namespace OHOS {
 namespace MiscServices {
-namespace {
-constexpr int32_t SUB_CMD_NAME = 0;
-constexpr int32_t CMD_NO_PARAM = 1;
-constexpr const char *CMD_HELP = "-h";
-constexpr const char *CMD_ALL = "-all";
-constexpr const char *ILLEGAL_INFOMATION = "The arguments are illegal and you can enter '-h' for help.\n";
-} // namespace
-
-void DumpHelper::AddDumpOperation(const DumpNoParamFunc &dumpAll)
-{
-    if (dumpAll == nullptr) {
-        return;
-    }
-    dumpAll_ = dumpAll;
+DumpHelper &DumpHelper::GetInstance() {
+    static DumpHelper instance;
+    return instance;
 }
 
-bool DumpHelper::Dump(int fd, const std::vector<std::string> &args)
-{
-    std::lock_guard<std::mutex> lock(hidumperMutex_);
-    std::string command = "";
-    std::string param = "";
+void DumpHelper::RegisterCommand(Command &cmd) {
+    std::string strCmd = cmd.GetOption();
+    cmdHandler_.insert(std::make_pair(cmd.GetOption(), cmd));
+}
 
-    if (args.size() == CMD_NO_PARAM) {
-        command = args.at(SUB_CMD_NAME);
-    } else {
-        ShowIllealInfomation(fd);
-    }
-
-    if (command == CMD_HELP) {
-        ShowHelp(fd);
-    } else if (command == CMD_ALL) {
-        if (!dumpAll_) {
-            return false;
+bool DumpHelper::Dispatch(int fd, const std::vector<std::string> &args) {
+    if (args.empty() || args.at(0) == "-h") {
+        dprintf(fd, "\n%-15s: %-20s", "Option", "Description");
+        for (auto &[key, handler]: cmdHandler_) {
+            dprintf(fd, "\n%-15s: %-20s", handler.GetFormat().c_str(), handler.ShowHelp().c_str());
         }
-        dumpAll_(fd);
-    } else {
-        ShowIllealInfomation(fd);
+        return false;
     }
-    return true;
-}
-
-void DumpHelper::ShowHelp(int fd)
-{
-    std::string result;
-    result.append("Usage:hidumper  wallpaper_fwk\n")
-        .append("Description:\n")
-        .append("-h")
-        .append("                        ")
-        .append("--help show help\n")
-        .append("-all")
-        .append("                      ")
-        .append("dump wallpaper information in the system\n")
-        .append("  width:                  ")
-        .append("dump information about the wallpaper width in the system\n")
-        .append("  height:                 ")
-        .append("dump information about the wallpaper height in the system\n")
-        .append("  WallpaperExtension:     ")
-        .append("dump information about the ExtensionInfo  in the system\n");
-    dprintf(fd, "%s\n", result.c_str());
-}
-
-void DumpHelper::ShowIllealInfomation(int fd)
-{
-    dprintf(fd, "%s\n", ILLEGAL_INFOMATION);
+    auto handler = cmdHandler_.find(args.at(0));
+    if (handler != cmdHandler_.end()) {
+        std::string output;
+        bool ret = handler->second.DoAction(args, output);
+        if (!ret) {
+            HILOG_INFO("DoAction faild");
+        }
+        dprintf(fd, "\n%s", output.c_str());
+        return ret;
+    }
+    return false;
 }
 } // namespace MiscServices
 } // namespace OHOS
