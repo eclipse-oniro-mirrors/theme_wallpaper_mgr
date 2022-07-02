@@ -82,6 +82,10 @@ void StatisticReporter::StartTimerThread()
                 HILOG_INFO(
                     " StartTimerThread if nHours=%{public}d,nMin=%{public}d,nTime=%{public}d", nHours, nMin, nTime);
                 sleep(nTime);
+                current = time(nullptr);
+                if (current == -1) {
+                    return;
+                }
                 InvokeUsageTime(current);
             } else {
                 sleep(WAIT_TIME * (TWENTY_FOUR_HOURS - currentHour));

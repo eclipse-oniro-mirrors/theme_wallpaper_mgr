@@ -165,13 +165,10 @@ void WallpaperService::OnStart()
             int32_t width = GetWallpaperMinWidth();
             int uid = static_cast<int>(IPCSkeleton::GetCallingUid());
             std::string bundleName(WALLPAPER_BUNDLE_NAME);
-            bool bRet = WPGetBundleNameByUid(uid, bundleName);
-            if (!bRet) {
-                bundleName = WALLPAPER_BUNDLE_NAME;
-            }
-            output.append("height:" + std::to_string(height) + "\n")
-                .append("width:" + std::to_string(width) + "\n")
-                .append("WallpaperExtension: ExtensionInfo{" + bundleName + "}\n");
+            WPGetBundleNameByUid(uid, bundleName);
+            output.append("height             : " + std::to_string(height) + "\n")
+                .append("width              : " + std::to_string(width) + "\n")
+                .append("WallpaperExtension : ExtensionInfo{" + bundleName + "}\n");
             return true;
         });
     DumpHelper::GetInstance().RegisterCommand(*cmd);
