@@ -12,26 +12,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 #include "dump_helper.h"
 #include "hilog_wrapper.h"
 using namespace OHOS::WallpaperMgrService;
 namespace OHOS {
 namespace MiscServices {
-DumpHelper &DumpHelper::GetInstance() {
+DumpHelper &DumpHelper::GetInstance()
+{
     static DumpHelper instance;
     return instance;
 }
 
-void DumpHelper::RegisterCommand(Command &cmd) {
+void DumpHelper::RegisterCommand(Command &cmd)
+{
     std::string strCmd = cmd.GetOption();
     cmdHandler_.insert(std::make_pair(cmd.GetOption(), cmd));
 }
 
-bool DumpHelper::Dispatch(int fd, const std::vector<std::string> &args) {
+bool DumpHelper::Dispatch(int fd, const std::vector<std::string> &args)
+{
     if (args.empty() || args.at(0) == "-h") {
         dprintf(fd, "\n%-15s: %-20s", "Option", "Description");
-        for (auto &[key, handler]: cmdHandler_) {
+        for (auto &[key, handler] : cmdHandler_) {
             dprintf(fd, "\n%-15s: %-20s", handler.GetFormat().c_str(), handler.ShowHelp().c_str());
         }
         return false;

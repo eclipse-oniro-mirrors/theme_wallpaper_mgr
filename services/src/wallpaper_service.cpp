@@ -161,19 +161,19 @@ void WallpaperService::OnStart()
     std::thread(&WallpaperService::StartExt, this).detach();
     auto cmd = std::make_shared<Command>(std::vector<std::string>({ "-all" }), "Show all",
         [this](const std::vector<std::string> &input, std::string &output) -> bool {
-        int32_t height = GetWallpaperMinHeight();
-        int32_t width = GetWallpaperMinWidth();
-        int uid = static_cast<int>(IPCSkeleton::GetCallingUid());
-        std::string  bundleName(WALLPAPER_BUNDLE_NAME);
-        bool bRet = WPGetBundleNameByUid(uid, bundleName);
-        if (!bRet){
-            bundleName = WALLPAPER_BUNDLE_NAME;
-        }
-        output.append("height:" + std::to_string(height) + "\n")
-            .append("width:" + std::to_string(width) + "\n")
-            .append("WallpaperExtension: ExtensionInfo{" + bundleName + "}\n");
-        return true;
-    });
+            int32_t height = GetWallpaperMinHeight();
+            int32_t width = GetWallpaperMinWidth();
+            int uid = static_cast<int>(IPCSkeleton::GetCallingUid());
+            std::string bundleName(WALLPAPER_BUNDLE_NAME);
+            bool bRet = WPGetBundleNameByUid(uid, bundleName);
+            if (!bRet) {
+                bundleName = WALLPAPER_BUNDLE_NAME;
+            }
+            output.append("height:" + std::to_string(height) + "\n")
+                .append("width:" + std::to_string(width) + "\n")
+                .append("WallpaperExtension: ExtensionInfo{" + bundleName + "}\n");
+            return true;
+        });
     DumpHelper::GetInstance().RegisterCommand(*cmd);
     Reporter::GetInstance().UsageTimeStatistic().StartTimerThread();
     return;

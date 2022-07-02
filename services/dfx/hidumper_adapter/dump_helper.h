@@ -26,7 +26,7 @@ namespace OHOS {
 namespace MiscServices {
 class DumpHelper {
 public:
-    static DumpHelper& GetInstance();
+    static DumpHelper &GetInstance();
     void RegisterCommand(Command &);
     bool Dispatch(int fd, const std::vector<std::string> &args);
 
@@ -35,4 +35,4 @@ private:
 };
 } // namespace MiscServices
 } // namespace OHOS
-#endif  // DISTRIBUTEDDATA_SERVICE_DUMPE_HELPER_H
+#endif // DISTRIBUTEDDATA_SERVICE_DUMPE_HELPER_H

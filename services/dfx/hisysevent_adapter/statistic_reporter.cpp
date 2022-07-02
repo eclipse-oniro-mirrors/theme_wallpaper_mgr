@@ -17,8 +17,10 @@
 #include <ctime>
 #include <thread>
 #include <vector>
+#include "hilog_wrapper.h"
 #include "hisysevent.h"
 
+using namespace OHOS::WallpaperMgrService;
 namespace OHOS {
 using namespace HiviewDFX;
 namespace MiscServices {
@@ -74,9 +76,12 @@ void StatisticReporter::StartTimerThread()
             int currentHour = localTime.tm_hour;
             int currentMin = localTime.tm_min;
             if ((EXEC_MIN_TIME - currentMin) != EXEC_MIN_TIME) {
-                sleep((EXEC_MIN_TIME - currentMin) * SIXTY_SEC + (EXEC_HOUR_TIME - currentHour) * WAIT_TIME);
-                InvokeUsageTime(current);
-            } else if (currentHour == ZERO_TIME) {
+                int nHours = EXEC_HOUR_TIME - currentHour;
+                int nMin = EXEC_MIN_TIME - currentMin;
+                int nTime = (nMin)*SIXTY_SEC + (nHours)*WAIT_TIME;
+                HILOG_INFO(
+                    " StartTimerThread if nHours=%{public}d,nMin=%{public}d,nTime=%{public}d", nHours, nMin, nTime);
+                sleep(nTime);
                 InvokeUsageTime(current);
             } else {
                 sleep(WAIT_TIME * (TWENTY_FOUR_HOURS - currentHour));
@@ -89,6 +94,7 @@ void StatisticReporter::StartTimerThread()
 
 ReportStatus StatisticReporter::InvokeUsageTime(time_t curTime)
 {
+    HILOG_INFO(" InvokeUsageTime start.");
     std::string statisicMsg;
     std::lock_guard<std::mutex> lock(usageTimeMutex_);
     for (auto const &uasgeTime : usageTimeStat_) {
@@ -113,6 +119,7 @@ ReportStatus StatisticReporter::InvokeUsageTime(time_t curTime)
 
     int nRet = HiSysEvent::Write(HiSysEvent::Domain::MISC_WALLPAPER, USAGETIME_STATISTIC,
         HiSysEvent::EventType::STATISTIC, WALLPAPER_INFO, statisicMsg);
+    HILOG_INFO(" InvokeUsageTime nRet = %{public}d.", nRet);
     return nRet == 0 ? ReportStatus::SUCCESS : ReportStatus::ERROR;
 }
 } // namespace MiscServices
