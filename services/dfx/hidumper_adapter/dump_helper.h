@@ -19,7 +19,6 @@
 #include <functional>
 #include <map>
 #include <string>
-#include <vector>
 #include "command.h"
 
 namespace OHOS {
@@ -27,7 +26,7 @@ namespace MiscServices {
 class DumpHelper {
 public:
     static DumpHelper &GetInstance();
-    void RegisterCommand(Command &);
+    void RegisterCommand(Command &cmd);
     bool Dispatch(int fd, const std::vector<std::string> &args);
 
 private:

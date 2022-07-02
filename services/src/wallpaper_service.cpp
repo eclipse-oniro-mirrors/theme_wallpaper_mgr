@@ -630,7 +630,7 @@ void WallpaperService::ReporterUsageTimeStatisic()
     int userId = static_cast<int>(IPCSkeleton::GetCallingUid());
     std::string  bundleName;
     bool bRet = WPGetBundleNameByUid(userId, bundleName);
-    if (!bRet){
+    if (!bRet) {
         bundleName = WALLPAPER_BUNDLE_NAME;
     }
     UsageTimeStat timeStat;
