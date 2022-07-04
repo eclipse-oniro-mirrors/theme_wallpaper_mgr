@@ -26,8 +26,7 @@ DumpHelper &DumpHelper::GetInstance()
 
 void DumpHelper::RegisterCommand(std::shared_ptr<Command> &cmd)
 {
-    std::string strCmd = cmd.GetOption();
-    cmdHandler_.insert(std::make_pair(cmd.GetOption(), cmd));
+    cmdHandler_.insert(std::make_pair(cmd->GetOption(), cmd));
 }
 
 bool DumpHelper::Dispatch(int fd, const std::vector<std::string> &args)
@@ -35,14 +34,14 @@ bool DumpHelper::Dispatch(int fd, const std::vector<std::string> &args)
     if (args.empty() || args.at(0) == "-h") {
         dprintf(fd, "\n%-15s: %-20s", "Option", "Description");
         for (auto &[key, handler] : cmdHandler_) {
-            dprintf(fd, "\n%-15s: %-20s", handler.GetFormat().c_str(), handler.ShowHelp().c_str());
+            dprintf(fd, "\n%-15s: %-20s", handler->GetFormat().c_str(), handler->ShowHelp().c_str());
         }
         return false;
     }
     auto handler = cmdHandler_.find(args.at(0));
     if (handler != cmdHandler_.end()) {
         std::string output;
-        bool ret = handler->second.DoAction(args, output);
+        bool ret = handler->second->DoAction(args, output);
         if (!ret) {
             HILOG_INFO("DoAction faild");
         }

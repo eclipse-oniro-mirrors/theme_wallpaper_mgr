@@ -30,7 +30,7 @@ public:
     bool Dispatch(int fd, const std::vector<std::string> &args);
 
 private:
-    std::map<std::string, Command> cmdHandler_;
+    std::map<std::string, std::shared_ptr<Command>> cmdHandler_;
 };
 } // namespace MiscServices
 } // namespace OHOS
