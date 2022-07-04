@@ -452,7 +452,7 @@ HWTEST_F(WallpaperTest, DFX002, TestSize.Level0)
 */
 HWTEST_F(WallpaperTest, DFX003, TestSize.Level0)
 {
-    HILOG_INFO("DFX002 ReportUsageTimeStatistic begin");
+    HILOG_INFO("DFX003 ReportUsageTimeStatistic begin");
     
     int userId = static_cast<int>(IPCSkeleton::GetCallingUid());
     UsageTimeStat timeStat;

@@ -41,13 +41,13 @@ domain: THEME
 
 SERVICE_FAULT:
   __BASE: {type: FAULT, level: CRITICAL, desc: The event is service fault }
-  FAULT_TYPE: {type: STRING, desc: fault id }
+  FAULT_TYPE: {type: INT32, desc: fault id }
   MODULE_NAME: {type: STRING, desc: module name }
   ERROR_TYPE: {type: INT32, desc: error type }
 
 RUNTIME_FAULT:
   __BASE: {type: FAULT, level: CRITICAL, desc: The event is runtime fault }
-  FAULT_TYPE: {type: STRING, desc: fault id }
+  FAULT_TYPE: {type: INT32, desc: fault id }
   ERROR_TYPE: {type: INT32, desc: error type }
 
 USAGETIME_STATISTIC:
