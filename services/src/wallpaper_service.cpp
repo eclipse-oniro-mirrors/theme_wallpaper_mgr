@@ -161,7 +161,7 @@ void WallpaperService::OnStart()
     std::thread(&WallpaperService::StartExt, this).detach();
     int uid = static_cast<int>(IPCSkeleton::GetCallingUid());
     auto cmd = std::make_shared<Command>(std::vector<std::string>({ "-all" }), "Show all",
-        [this,uid](const std::vector<std::string> &input, std::string &output) -> bool {
+        [this, uid](const std::vector<std::string> &input, std::string &output) -> bool {
             int32_t height = GetWallpaperMinHeight();
             int32_t width = GetWallpaperMinWidth();
             std::string bundleName(WALLPAPER_BUNDLE_NAME);
