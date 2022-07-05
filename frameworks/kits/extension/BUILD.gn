@@ -45,7 +45,7 @@ config("ability_config") {
     "${ABILITY_RUNTIME_INNERKITS_PATH}/ability_manager/include/continuation",
     "${ability_runtime_path}/interfaces/kits/native/ability/native/continuation/kits",
     "${ability_runtime_path}/interfaces/kits/native/appkit/app/task",
-    "${ability_runtime_path}/frameworks/js/napi/aafwk/inner/napi_common",
+    "${ability_runtime_napi_path}/inner/napi_common",
   ]
 
   cflags = []
