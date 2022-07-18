@@ -12,10 +12,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <cstdio>
-#include <utility>
 #include "dump_helper.h"
 #include "hilog_wrapper.h"
+#include <cstdio>
+#include <utility>
 using namespace OHOS::WallpaperMgrService;
 namespace OHOS {
 namespace MiscServices {
