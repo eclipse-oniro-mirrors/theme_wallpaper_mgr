@@ -1,5 +1,5 @@
 {
-    "name": "@ohos/wallpaper",
+    "name": "@ohos/wallpaper_mgr",
     "description": "Allowing apps to use OS wallpaper get/set functions",
     "version": "3.1",
     "license": "Apache License 2.0",
