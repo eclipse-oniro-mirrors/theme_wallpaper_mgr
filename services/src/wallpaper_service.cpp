@@ -2057,13 +2057,14 @@ ErrorCode WallpaperService::GetImageSize(
         return E_FILE_ERROR;
     }
     int32_t fend = fseek(fd, 0, SEEK_END);
-    size = ftell(fd);
+    long length = ftell(fd);
     int32_t fset = fseek(fd, 0, SEEK_SET);
-    if (size <= 0 || fend != 0 || fset != 0) {
+    if (length <= 0 || length > INT32_MAX || fend != 0 || fset != 0) {
         HILOG_ERROR("ftell file failed or fseek file failed, errno %{public}d", errno);
         fclose(fd);
         return E_FILE_ERROR;
     }
+    size = static_cast<int32_t>(length);
     fclose(fd);
     return NO_ERROR;
 }
