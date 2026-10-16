@@ -320,6 +320,7 @@ void OnWallpaperChange(::taihe::callback_view<void(::ohos::wallpaper::WallpaperT
     auto observer = std::make_shared<ani_wallpaper::WallpaperObserver>(func, callbackRef);
     ErrorCode wallpaperErrorCode = WallpaperManager::GetInstance().On("wallpaperChange", observer);
     if (wallpaperErrorCode != E_OK) {
+        observer->Release();
         setErrorCode(wallpaperErrorCode);
         return;
     }

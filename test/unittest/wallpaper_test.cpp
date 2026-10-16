@@ -2001,5 +2001,82 @@ HWTEST_F(WallpaperTest, WallpaperTest_StateAtomic001, TestSize.Level1)
         WallpaperService::ServiceRunningState::STATE_NOT_START) << "Failed to State";
 }
 /*********************   Wallpaper_service   *********************/
+
+/*********************   GetImageSize   *********************/
+/**
+ * @tc.name: GetImageSize_OverInt32Max001
+ * @tc.desc: GetImageSize(3-param) with file size exceeding INT32_MAX, verify returns E_FILE_ERROR.
+ * @tc.type: FUNC
+ */
+HWTEST_F(WallpaperTest, GetImageSize_OverInt32Max001, TestSize.Level0)
+{
+    HILOG_INFO("GetImageSize_OverInt32Max001 begin");
+    std::shared_ptr<WallpaperService> wallpaperService = std::make_shared<WallpaperService>();
+    std::string largeFile = "/data/test/theme/wallpaper/large_over_int32max";
+    int32_t fd = open(largeFile.c_str(), O_CREAT | O_WRONLY | O_TRUNC, MODE);
+    ASSERT_GE(fd, 0) << "Failed to create test file";
+    ASSERT_EQ(ftruncate(fd, 2147483648LL), 0) << "Failed to set file size over INT32_MAX";
+    close(fd);
+    int32_t userId = DEFAULT_USERID;
+    WallpaperData wallpaperData(userId, largeFile);
+    wallpaperService->systemWallpaperMap_.InsertOrAssign(userId, wallpaperData);
+    int32_t size = 0;
+    ErrorCode ret = wallpaperService->GetImageSize(userId, WALLPAPER_SYSTEM, size);
+    EXPECT_EQ(ret, E_FILE_ERROR) << "Failed to handle file size over INT32_MAX";
+    remove(largeFile.c_str());
+}
+
+/**
+ * @tc.name: GetImageSize_OverInt32Max002
+ * @tc.desc: GetImageSize(5-param) with file size exceeding INT32_MAX, verify returns E_FILE_ERROR.
+ * @tc.type: FUNC
+ */
+HWTEST_F(WallpaperTest, GetImageSize_OverInt32Max002, TestSize.Level0)
+{
+    HILOG_INFO("GetImageSize_OverInt32Max002 begin");
+    std::shared_ptr<WallpaperService> wallpaperService = std::make_shared<WallpaperService>();
+    std::string largeFile = "/data/test/theme/wallpaper/large_over_int32max_5p";
+    int32_t fd = open(largeFile.c_str(), O_CREAT | O_WRONLY | O_TRUNC, MODE);
+    ASSERT_GE(fd, 0) << "Failed to create test file";
+    ASSERT_EQ(ftruncate(fd, 2147483648LL), 0) << "Failed to set file size over INT32_MAX";
+    close(fd);
+    int32_t userId = DEFAULT_USERID;
+    WallpaperData wallpaperData(userId, largeFile);
+    wallpaperService->systemWallpaperMap_.InsertOrAssign(userId, wallpaperData);
+    int32_t size = 0;
+    ErrorCode ret = wallpaperService->GetImageSize(userId, WALLPAPER_SYSTEM, size, NORMAL, PORT);
+    EXPECT_EQ(ret, E_FILE_ERROR) << "Failed to handle file size over INT32_MAX";
+    remove(largeFile.c_str());
+}
+
+/**
+ * @tc.name: GetImageSize_Fifo001
+ * @tc.desc: GetImageSize with FIFO file, fseek(SEEK_END) fails (fend != 0), cover branch fend != 0.
+ * @tc.type: FUNC
+ */
+HWTEST_F(WallpaperTest, GetImageSize_Fifo001, TestSize.Level0)
+{
+    HILOG_INFO("GetImageSize_Fifo001 begin");
+    std::shared_ptr<WallpaperService> wallpaperService = std::make_shared<WallpaperService>();
+    std::string fifoPath = "/data/test/theme/wallpaper/test_fifo";
+    remove(fifoPath.c_str());
+    ASSERT_EQ(mkfifo(fifoPath.c_str(), MODE), 0) << "Failed to create FIFO";
+    int32_t rfd = open(fifoPath.c_str(), O_RDONLY | O_NONBLOCK);
+    ASSERT_GE(rfd, 0) << "Failed to open FIFO reader";
+    int32_t wfd = open(fifoPath.c_str(), O_WRONLY | O_NONBLOCK);
+    ASSERT_GE(wfd, 0) << "Failed to open FIFO writer";
+    int32_t userId = DEFAULT_USERID;
+    WallpaperData wallpaperData(userId, fifoPath);
+    wallpaperService->systemWallpaperMap_.InsertOrAssign(userId, wallpaperData);
+    int32_t size = 0;
+    ErrorCode ret = wallpaperService->GetImageSize(userId, WALLPAPER_SYSTEM, size);
+    EXPECT_EQ(ret, E_FILE_ERROR) << "3-param: fseek failure should return E_FILE_ERROR";
+    ret = wallpaperService->GetImageSize(userId, WALLPAPER_SYSTEM, size, NORMAL, PORT);
+    EXPECT_EQ(ret, E_FILE_ERROR) << "5-param: fseek failure should return E_FILE_ERROR";
+    close(rfd);
+    close(wfd);
+    remove(fifoPath.c_str());
+}
+/*********************   GetImageSize   *********************/
 } // namespace WallpaperMgrService
 } // namespace OHOS
