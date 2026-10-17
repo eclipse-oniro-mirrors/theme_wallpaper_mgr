@@ -28,8 +28,13 @@ public:
 
     virtual bool Marshalling(Parcel &parcel) const override;
     static WallpaperPictureInfoByParcel *Unmarshalling(Parcel &parcel);
-
     std::vector<WallpaperPictureInfo> wallpaperPictureInfo_;
+
+private:
+    static void CloseWallpaperInfoFd(std::vector<WallpaperPictureInfo> &wallpaperPictureInfos);
+    static bool ReadFoldState(int32_t value, FoldState &out);
+    static bool ReadRotateState(int32_t value, RotateState &out);
+    static bool ReadOneWallpaperInfo(Parcel &parcel, MessageParcel &messageParcel, WallpaperPictureInfo &info);
 };
 } // namespace OHOS::WallpaperMgrService
 
