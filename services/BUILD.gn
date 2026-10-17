@@ -24,6 +24,7 @@ config("wallpaper_service_config") {
 }
 
 ohos_shared_library("wallpaper_service") {
+  shlib_type = "sa"
   sources = [
     "src/component_name.cpp",
     "src/wallpaper_common_event_manager.cpp",

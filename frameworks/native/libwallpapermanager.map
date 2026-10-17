@@ -1,0 +1,25 @@
+{
+  global:
+    _init;
+    _fini;
+
+  extern "C++" {
+    OHOS::WallpaperMgrService::WallpaperManager::*;
+    OHOS::WallpaperMgrService::WallpaperManagerClient::*;
+    OHOS::WallpaperMgrService::WallpaperRawData::*;
+    OHOS::WallpaperMgrService::WallpaperPictureInfoByParcel::*;
+    OHOS::WallpaperMgrService::WallpaperEventListenerClient::*;
+    OHOS::WallpaperMgrService::WallpaperEventListenerStub::*;
+    OHOS::WallpaperMgrService::WallpaperServiceCbStub::*;
+    OHOS::WallpaperMgrService::IWallpaperCallback::*;
+    OHOS::WallpaperMgrService::IWallpaperEventListener::*;
+  };
+
+  *vtable*for*OHOS*Wallpaper*;
+  *typeinfo*for*OHOS*Wallpaper*;
+  *typeinfo*name*for*OHOS*Wallpaper*;
+  *VTT*for*OHOS*Wallpaper*;
+
+  local:
+    *;
+};

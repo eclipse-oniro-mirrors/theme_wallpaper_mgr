@@ -1,0 +1,17 @@
+{
+  global:
+    _init;
+    _fini;
+
+  extern "C++" {
+    OHOS::AbilityRuntime::WallpaperExtensionAbility::*;
+  };
+
+  *vtable*for*OHOS*AbilityRuntime*Wallpaper*;
+  *typeinfo*for*OHOS*AbilityRuntime*Wallpaper*;
+  *typeinfo*name*for*OHOS*AbilityRuntime*Wallpaper*;
+  *VTT*for*OHOS*AbilityRuntime*Wallpaper*;
+
+  local:
+    *;
+};

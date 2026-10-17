@@ -1,0 +1,25 @@
+{
+  global:
+    _init;
+    _fini;
+
+  extern "C++" {
+    OHOS::MiscServices::DumpHelper::*;
+    OHOS::MiscServices::Command::*;
+    OHOS::MiscServices::FaultReporter::*;
+    OHOS::WallpaperMgrService::FileDeal::*;
+    OHOS::WallpaperMgrService::MemoryGuard::*;
+  };
+
+  *vtable*for*OHOS*MiscServices*;
+  *typeinfo*for*OHOS*MiscServices*;
+  *typeinfo*name*for*OHOS*MiscServices*;
+  *VTT*for*OHOS*MiscServices*;
+  *vtable*for*OHOS*WallpaperMgrService*;
+  *typeinfo*for*OHOS*WallpaperMgrService*;
+  *typeinfo*name*for*OHOS*WallpaperMgrService*;
+  *VTT*for*OHOS*WallpaperMgrService*;
+
+  local:
+    *;
+};
