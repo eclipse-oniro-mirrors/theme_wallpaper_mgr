@@ -166,6 +166,33 @@ ohos_unittest("wallpaper_cjson_mock_test") {
   ]
 }
 
+ohos_unittest("wallpaper_picture_info_test") {
+  testonly = true
+  module_out_path = "wallpaper_mgr/wallpaper_mgr/wallpaper_picture_info_test"
+  sources = [ "unittest/wallpaper_picture_info_test.cpp" ]
+
+  cflags = [
+    "-fno-access-control",  # Ignore Private Member Access Control
+  ]
+
+  include_dirs = [
+    "${wallpaper_path}/services/include",
+    "${wallpaper_path}/test/unittest/mock"
+  ]
+
+  deps = [
+    "${utils_path}:wallpaper_utils",
+    "${wallpaper_path}/frameworks/native:wallpapermanager_static",
+  ]
+  external_deps = [
+    "bounds_checking_function:libsec_shared",
+    "c_utils:utils",
+    "hilog:libhilog",
+    "ipc:ipc_single",
+    "samgr:samgr_proxy",
+  ]
+}
+
 group("unittest") {
   testonly = true
 
@@ -176,5 +203,6 @@ group("unittest") {
     ":wallpaper_permission_test",
     ":wallpaper_test",
     ":wallpaper_cjson_mock_test",
+    ":wallpaper_picture_info_test",
   ]
 }
