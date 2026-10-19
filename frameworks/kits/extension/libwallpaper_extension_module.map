@@ -1,0 +1,15 @@
+{
+  global:
+    _init;
+    _fini;
+
+    OHOS_EXTENSION_GetExtensionModule;
+
+  *vtable*for*OHOS*AbilityRuntime*WallpaperExtensionModuleLoader*;
+  *typeinfo*for*OHOS*AbilityRuntime*WallpaperExtensionModuleLoader*;
+  *typeinfo*name*for*OHOS*AbilityRuntime*WallpaperExtensionModuleLoader*;
+  *VTT*for*OHOS*AbilityRuntime*WallpaperExtensionModuleLoader*;
+
+  local:
+    *;
+};

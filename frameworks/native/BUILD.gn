@@ -79,6 +79,8 @@ ohos_shared_library("wallpapermanager") {
     debug = false
   }
 
+  version_script = "libwallpapermanager.map"
+
   sources = [
     "src/wallpaper_event_listener_client.cpp",
     "src/wallpaper_event_listener_stub.cpp",

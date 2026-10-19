@@ -39,6 +39,8 @@ ohos_shared_library("wallpaperextensionability") {
     "-Os",
   ]
 
+  version_script = "libwallpaperextensionability.map"
+
   include_dirs = [
     "${wallpaper_path}/frameworks/native/include",
     "${wallpaper_path}/frameworks/kits/extension/include",
@@ -103,6 +105,8 @@ ohos_shared_library("wallpaper_extension_module") {
     "-fvisibility=hidden",
     "-Os",
   ]
+
+  version_script = "libwallpaper_extension_module.map"
 
   sources = [ "${wallpaper_path}/frameworks/kits/extension/src/wallpaper_extension_module_loader.cpp" ]
 
