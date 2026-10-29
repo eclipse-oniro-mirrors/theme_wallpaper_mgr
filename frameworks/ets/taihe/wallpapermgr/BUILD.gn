@@ -37,6 +37,7 @@ taihe_shared_library("wallpapermgr_ani") {
   taihe_generated_file_path = "$taihe_generated_file_path"
   subsystem_name = "$subsystem_name"
   part_name = "$part_name"
+  version_script = "libwallpapermgr_ani.map"
   include_dirs = [
     "${wallpaper_path}/frameworks/js/napi",
     "${wallpaper_path}/frameworks/native/include",
