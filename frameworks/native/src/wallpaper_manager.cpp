@@ -66,7 +66,8 @@ WallpaperManager::~WallpaperManager()
 {
     std::map<int32_t, int32_t>::iterator iter = wallpaperFdMap_.begin();
     while (iter != wallpaperFdMap_.end()) {
-        close(iter->second);
+        fdsan_exchange_owner_tag(iter->second, 0, WP_DOMAIN);
+        fdsan_close_with_tag(iter->second, WP_DOMAIN);
         ++iter;
     }
 }
@@ -192,7 +193,8 @@ ErrorCode WallpaperManager::GetFile(int32_t wallpaperType, int32_t &wallpaperFd)
     std::lock_guard<std::mutex> lock(wallpaperFdLock_);
     std::map<int32_t, int32_t>::iterator iter = wallpaperFdMap_.find(wallpaperType);
     if (iter != wallpaperFdMap_.end() && fcntl(iter->second, F_GETFL) != -1) {
-        close(iter->second);
+        fdsan_exchange_owner_tag(iter->second, 0, WP_DOMAIN);
+        fdsan_close_with_tag(iter->second, WP_DOMAIN);
         wallpaperFdMap_.erase(iter);
     }
     ErrorCode wallpaperErrorCode = ConvertIntToErrorCode(wallpaperServerProxy->GetFile(wallpaperType, wallpaperFd));
@@ -600,7 +602,8 @@ void WallpaperManager::CloseWallpaperFd(int32_t wallpaperType)
     std::lock_guard<std::mutex> lock(wallpaperFdLock_);
     std::map<int32_t, int32_t>::iterator iter = wallpaperFdMap_.find(wallpaperType);
     if (iter != wallpaperFdMap_.end() && fcntl(iter->second, F_GETFL) != -1) {
-        close(iter->second);
+        fdsan_exchange_owner_tag(iter->second, 0, WP_DOMAIN);
+        fdsan_close_with_tag(iter->second, WP_DOMAIN);
         wallpaperFdMap_.erase(iter);
     }
 }
