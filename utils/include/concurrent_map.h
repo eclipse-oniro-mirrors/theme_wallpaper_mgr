@@ -136,21 +136,14 @@ public:
             return 0;
         }
         std::lock_guard<decltype(mutex_)> lock(mutex_);
-#if __cplusplus > 201703L
-        auto count = std::erase_if(
-            entries_, [&action](value_type &value) -> bool { return action(value.first, value.second); });
-#else
-        auto count = entries_.size();
-        for (auto it = entries_.begin(); it != entries_.end();) {
-            if (action((*it).first, (*it).second)) {
-                it = entries_.erase(it);
-            } else {
-                ++it;
+        auto sizeBefore = entries_.size();
+        auto entries = entries_;
+        for (auto &[key, value] : entries) {
+            if (action(key, value)) {
+                entries_.erase(key);
             }
         }
-        count -= entries_.size();
-#endif
-        return count;
+        return sizeBefore - entries_.size();
     }
 
     void ForEach(const std::function<bool(const key_type &, mapped_type &)> &action)
@@ -159,7 +152,8 @@ public:
             return;
         }
         std::lock_guard<decltype(mutex_)> lock(mutex_);
-        for (auto &[key, value] : entries_) {
+        auto entries = entries_;
+        for (auto &[key, value] : entries) {
             if (action(key, value)) {
                 break;
             }

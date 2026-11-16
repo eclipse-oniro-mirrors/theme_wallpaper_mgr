@@ -20,8 +20,6 @@
 
 namespace ani_wallpaper {
 
-std::shared_ptr<OHOS::AppExecFwk::EventHandler> JsBaseObserver::mainHandler_;
-
 JsBaseObserver::JsBaseObserver(VarCallbackType cb, ani_ref jsCallbackRef)
     : jsCallback_(cb), jsCallbackRef_(jsCallbackRef)
 {
@@ -32,15 +30,18 @@ bool JsBaseObserver::SendEventToMainThread(const std::function<void()> func)
     if (func == nullptr) {
         return false;
     }
-    if (!mainHandler_) {
-        std::shared_ptr<OHOS::AppExecFwk::EventRunner> runner = OHOS::AppExecFwk::EventRunner::GetMainEventRunner();
+    static auto handler = []() -> std::shared_ptr<OHOS::AppExecFwk::EventHandler> {
+        auto runner = OHOS::AppExecFwk::EventRunner::GetMainEventRunner();
         if (!runner) {
             HILOG_ERROR("GetMainEventRunner failed");
-            return false;
+            return nullptr;
         }
-        mainHandler_ = std::make_shared<OHOS::AppExecFwk::EventHandler>(runner);
+        return std::make_shared<OHOS::AppExecFwk::EventHandler>(runner);
+    }();
+    if (!handler) {
+        return false;
     }
-    mainHandler_->PostTask(func, "", 0, OHOS::AppExecFwk::EventQueue::Priority::IMMEDIATE, {});
+    handler->PostTask(func, "", 0, OHOS::AppExecFwk::EventQueue::Priority::IMMEDIATE, {});
     return true;
 }
 

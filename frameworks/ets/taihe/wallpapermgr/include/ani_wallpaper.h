@@ -82,7 +82,6 @@ public:
     std::recursive_mutex mutex_;
     VarCallbackType jsCallback_;
     ani_ref jsCallbackRef_ = nullptr;
-    static std::shared_ptr<OHOS::AppExecFwk::EventHandler> mainHandler_;
 };
 
 template<class DerivedObserverClass>
