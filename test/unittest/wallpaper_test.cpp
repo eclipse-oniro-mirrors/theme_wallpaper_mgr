@@ -1542,6 +1542,40 @@ HWTEST_F(WallpaperTest, SetAllWallpapers006, TestSize.Level0)
     EXPECT_EQ(wallpaperErrorCode, E_OK) << "Failed to SetAllWallpapers";
 }
 
+/**
+* @tc.name: SetAllWallpapers007
+* @tc.desc: SetAllWallpapers with non-system app throws E_NOT_SYSTEM_APP.
+* @tc.type: FUNC
+* @tc.require:
+*/
+HWTEST_F(WallpaperTest, SetAllWallpapers007, TestSize.Level1)
+{
+    HILOG_INFO("SetAllWallpapers007 begin");
+    std::vector<WallpaperInfo> wallpaperInfo;
+    wallpaperInfo.push_back(wallpaperInfo_normal_port);
+    wallpaperInfo.push_back(wallpaperInfo_normal_land);
+    MockHapToken mockHapToken("wallpaper_test_non_system_app", {}, false);
+    ErrorCode wallpaperErrorCode = WallpaperManager::GetInstance().SetAllWallpapers(wallpaperInfo, SYSTYEM);
+    EXPECT_EQ(wallpaperErrorCode, E_NOT_SYSTEM_APP) << "non-system app check failed";
+}
+
+/**
+* @tc.name: SetAllWallpapers008
+* @tc.desc: SetAllWallpapers with system app but no SET_WALLPAPER permission throws E_NO_PERMISSION.
+* @tc.type: FUNC
+* @tc.require:
+*/
+HWTEST_F(WallpaperTest, SetAllWallpapers008, TestSize.Level1)
+{
+    HILOG_INFO("SetAllWallpapers008 begin");
+    std::vector<WallpaperInfo> wallpaperInfo;
+    wallpaperInfo.push_back(wallpaperInfo_normal_port);
+    wallpaperInfo.push_back(wallpaperInfo_normal_land);
+    MockHapToken mockHapToken("wallpaper_test_no_permission", {}, true);
+    ErrorCode wallpaperErrorCode = WallpaperManager::GetInstance().SetAllWallpapers(wallpaperInfo, LOCKSCREEN);
+    EXPECT_EQ(wallpaperErrorCode, E_NO_PERMISSION) << "no permission check failed";
+}
+
 /*********************   SetAllWallpapers   *********************/
 
 /*********************   GetCorrespondWallpaper   *********************/
