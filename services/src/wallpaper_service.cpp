@@ -1789,6 +1789,16 @@ void WallpaperService::UpdateWallpaperMap(
 ErrCode WallpaperService::SetAllWallpapers(const WallpaperPictureInfoByParcel &wallpaperPictureInfoByParcel,
     int32_t wallpaperType, const std::vector<int> &fdVector)
 {
+    if (!IsSystemApp() && !IsNativeSa()) {
+        HILOG_ERROR("Is not SystemApp or NativeSA.");
+        CloseVectorFd(fdVector);
+        return E_NOT_SYSTEM_APP;
+    }
+    if (!CheckCallingPermission(WALLPAPER_PERMISSION_NAME_SET_WALLPAPER)) {
+        HILOG_ERROR("SetWallpaper no set permission.");
+        CloseVectorFd(fdVector);
+        return E_NO_PERMISSION;
+    }
     StartAsyncTrace(HITRACE_TAG_MISC, "SetAllWallpapers", static_cast<int32_t>(TraceTaskId::SET_ALL_WALLPAPERS));
     std::vector<WallpaperPictureInfo> wallpaperPictureInfo;
     wallpaperPictureInfo = wallpaperPictureInfoByParcel.wallpaperPictureInfo_;
@@ -1811,14 +1821,6 @@ ErrorCode WallpaperService::SetAllWallpapers(
     std::vector<WallpaperPictureInfo> allWallpaperInfos, int32_t wallpaperType, WallpaperResourceType resourceType)
 {
     StartAsyncTrace(HITRACE_TAG_MISC, "SetAllWallpapers", static_cast<int32_t>(TraceTaskId::SET_ALL_WALLPAPERS));
-    if (!IsSystemApp() && !IsNativeSa()) {
-        HILOG_ERROR("Is not SystemApp or NativeSA.");
-        return E_NOT_SYSTEM_APP;
-    }
-    if (!CheckCallingPermission(WALLPAPER_PERMISSION_NAME_SET_WALLPAPER)) {
-        HILOG_ERROR("SetWallpaper no set permission.");
-        return E_NO_PERMISSION;
-    }
     int32_t userId = QueryActiveUserId();
     HILOG_INFO("SetAllWallpapers userId: %{public}d", userId);
     if (!CheckUserPermissionById(userId)) {

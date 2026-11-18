@@ -20,8 +20,6 @@
 
 namespace ani_wallpaper {
 
-std::shared_ptr<OHOS::AppExecFwk::EventHandler> JsBaseObserver::mainHandler_;
-
 JsBaseObserver::JsBaseObserver(VarCallbackType cb, ani_ref jsCallbackRef)
     : jsCallback_(cb), jsCallbackRef_(jsCallbackRef)
 {
@@ -32,16 +30,20 @@ bool JsBaseObserver::SendEventToMainThread(const std::function<void()> func)
     if (func == nullptr) {
         return false;
     }
-    if (!mainHandler_) {
-        std::shared_ptr<OHOS::AppExecFwk::EventRunner> runner = OHOS::AppExecFwk::EventRunner::GetMainEventRunner();
-        if (!runner) {
-            HILOG_ERROR("GetMainEventRunner failed");
-            return false;
+    static std::shared_ptr<OHOS::AppExecFwk::EventHandler> handler;
+    static std::mutex handlerMutex;
+    {
+        std::lock_guard<std::mutex> lock(handlerMutex);
+        if (!handler) {
+            auto runner = OHOS::AppExecFwk::EventRunner::GetMainEventRunner();
+            if (!runner) {
+                HILOG_ERROR("GetMainEventRunner failed");
+                return false;
+            }
+            handler = std::make_shared<OHOS::AppExecFwk::EventHandler>(runner);
         }
-        mainHandler_ = std::make_shared<OHOS::AppExecFwk::EventHandler>(runner);
     }
-    mainHandler_->PostTask(func, "", 0, OHOS::AppExecFwk::EventQueue::Priority::IMMEDIATE, {});
-    return true;
+    return handler->PostTask(func, "", 0, OHOS::AppExecFwk::EventQueue::Priority::IMMEDIATE, {});
 }
 
 void JsBaseObserver::Release()
